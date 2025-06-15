@@ -8,7 +8,7 @@ const Profile = () => {
       <h1 className="text-3xl font-bold">Your Profile</h1>
       <div className="flex items-center mt-4">
         <div className="w-32 h-32 bg-red-500 text-white flex items-center justify-center rounded-full text-4xl font-bold">
-          Mafruza
+          M
         </div>
         <div className="ml-6">
           <h2 className="text-xl font-semibold">Mafruza</h2>
