@@ -18,32 +18,23 @@ const TopNav = () => {
 
   const logOut = () => {
     localStorage.removeItem("token");
-    navigate("/login"); // foydalanuvchini login sahifasiga yuborish
+    navigate("/login"); 
   };
 
   return (
-    <header className="w-full h-16 bg-white shadow flex items-center justify-between px-6 border-b">
-      {/* Left: Logo */}
-      <div className="text-xl font-bold text-blue-600 tracking-wide"></div>
+    <header className="w-full  h-16 bg-white shadow flex items-center justify-between px-6 border-b">
+      
+      <div className="text-xl font-bold text-blue-600 tracking-wide">+ New </div>
 
-      {/* Center: Search */}
-      <div className="flex items-center w-md">
-        <input
-          type="text"
-          placeholder="Search group and join..."
-          className="px-3 w-full py-1.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      {/* Right: Icons */}
+     
       <div className="flex items-center space-x-4">
-        {/* Notification */}
+        
         <button className="relative hover:text-blue-600">
           <Bell className="w-5 h-5" />
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
 
-        {/* User Avatar + Dropdown */}
+     
         <div className="relative">
           <div
             className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm cursor-pointer hover:shadow"

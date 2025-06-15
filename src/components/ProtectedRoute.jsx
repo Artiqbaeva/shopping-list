@@ -8,7 +8,6 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  // Agar Layout ichiga bolalar joylangan bo‘lsa
   return children ? children : <Outlet />;
 };
 

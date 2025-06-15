@@ -8,7 +8,7 @@ import CreateGroup from "../Groups/CreateGroup";
 import GroupDetails from "../Groups/GroupDetails";
 import NotFound from "../NotFound";
 import ProtectedRoute from "../../components/ProtectedRoute";
-import Layout from "../../components/Layout"; // Yana faollashtirildi!
+import Layout from "../../components/Layout"; 
 
 const AppRoutes = () => {
   const isAuthenticated = !!localStorage.getItem("token");

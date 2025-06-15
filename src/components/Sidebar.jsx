@@ -14,10 +14,7 @@ const Sidebar = () => {
 
   return (
     <aside className="w-64 min-h-screen bg-white shadow-lg p-4">
-      <div className="text-2xl font-bold text-center text-blue-600 mb-6">
-        MyPanel
-      </div>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 mt-20">
         {menu.map((item) => {
           const isActive = location.pathname === item.path;
           return (
