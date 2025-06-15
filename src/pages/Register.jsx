@@ -1,34 +1,91 @@
 import axios from "axios";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
-  if (localStorage.getItem("token")) {
-    return navigate("/");
-  }
+
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/main");
+    }
+  }, [navigate]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    let newUser = {
-      name: e.target[0].value,
-      username: e.target[1].value,
-      password: e.target[2].value,
-    };
-    let res = await axios.post(
-      "https://nt-shopping-list.onrender.com/api/users",
-      newUser
-    );
-    localStorage.setItem("token", res.data.token);
-    console.log(res);
+    try {
+      const res = await axios.post(
+        "https://nt-shopping-list.onrender.com/api/users",
+        formData
+      );
+      localStorage.setItem("token", res.data.token);
+      navigate("/main");
+    } catch (err) {
+      alert("Registration failed!");
+      console.error(err);
+    }
   };
+
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="name" />
-        <input type="text" placeholder="username" />
-        <input type="password" placeholder="password" />
-        <button type="sumbit">Sign Up</button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+          Sign Up
+        </h2>
+        <form onSubmit={onSubmit} className="flex flex-col gap-4">
+          <label>Name</label>
+          <input
+            type="text"
+            placeholder="Name"
+            required
+            value={formData.name}
+            onChange={(e) =>
+              setFormData({ ...formData, name: e.target.value })
+            }
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <label>Username</label>
+          <input
+            type="text"
+            placeholder="Username"
+            required
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          >
+            Sign Up
+          </button>
+        </form>
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <Link to="/" className="text-blue-600 hover:underline">
+            Login here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,15 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
 
-  // Agar token bor bo‘lsa, userni avtomatik `/main` ga yo‘naltiramiz
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       navigate("/main");
@@ -14,19 +18,14 @@ function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      username: e.target[0].value,
-      password: e.target[1].value,
-    };
-
     try {
       const res = await axios.post(
         "https://nt-shopping-list.onrender.com/api/auth",
-        user
+        formData
       );
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
-        navigate("/main"); // to‘g‘ri sahifaga redirect
+        navigate("/main");
       }
     } catch (err) {
       alert("Login failed!");
@@ -35,13 +34,48 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="username" required />
-        <input type="password" placeholder="password" required />
-        <button type="submit">Login</button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+          Sign In
+        </h2>
+        <form onSubmit={onSubmit} className="flex flex-col gap-4">
+          <label>Username</label>
+          <input
+            type="text"
+            placeholder="Username"
+            required
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          >
+            Login
+          </button>
+        </form>
+        <p className="text-center mt-4">
+          No account yet?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Create One
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
