@@ -1,31 +1,42 @@
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "../Login";
+import Register from "../Register";
+import Profile from "../Profile";
+import MyGroups from "../Groups/MyGroups";
+import CreateGroup from "../Groups/CreateGroup";
+import GroupDetails from "../Groups/GroupDetails";
+import NotFound from "../NotFound";
+import ProtectedRoute from "../../components/ProtectedRoute";
+import Layout from "../../components/Layout"; // Yana faollashtirildi!
 
-import React, { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-
-
-const Home = lazy(() => import('../Home'));
-const Files = lazy(() => import('../pages/Files'));
-const Tom = lazy(() => import('../pages/User/Tom'));
-const Bill = lazy(() => import('../pages/User/Bill'));
-const Alex = lazy(() => import('../pages/User/Alex'));
-const Team1 = lazy(() => import('../pages/Team/Team1'));
-const Team2 = lazy(() => import('../pages/Team/Team2'));
-const Option1 = lazy(() => import('../pages/Option/Option1'));
-const Option2 = lazy(() => import('../pages/Option/Option2'));
 const AppRoutes = () => {
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
-    <Suspense fallback={<div style={{textAlign: 'center', marginTop: 260}}>Loading...</div>}>
-      <Routes>
-        <Route path="/files" element={<Files />} />
-        <Route path="/user/tom" element={<Tom />} />
-        <Route path="/user/bill" element={<Bill />} />
-        <Route path="/user/alex" element={<Alex />} />
-        <Route path="/team/1" element={<Team1 />} />
-        <Route path="/team/2" element={<Team2 />} />
-        <Route path="1" element={<Option1/>} />
-        <Route path="2" element={<Option2/>} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<Navigate to={isAuthenticated ? "/main" : "/login"} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+
+      <Route
+        path="/main/*"
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Profile />} />
+        <Route path="groups" element={<MyGroups />} />
+        <Route path="groups/create" element={<CreateGroup />} />
+        <Route path="groups/:id" element={<GroupDetails />} />
+      </Route>
+
+      {/* 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
