@@ -25,6 +25,14 @@ function Login() {
       );
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
+        
+        
+        const userInfo = {
+          name: res.data.name || "User", // agar backend yubormasa
+          username: formData.username,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfo));
+
         navigate("/main");
       }
     } catch (err) {

@@ -14,7 +14,10 @@ const Sidebar = () => {
 
   return (
     <aside className="w-64 min-h-screen bg-white shadow-lg p-4">
-      <nav className="flex flex-col gap-2 mt-20">
+      <div>
+        <img src="https://saturn-public-assets.s3.us-east-2.amazonaws.com/example-resources/plotly_dash_logo.png" alt="" />
+      </div>
+      <nav className="flex flex-col gap-2 mt-6">
         {menu.map((item) => {
           const isActive = location.pathname === item.path;
           return (

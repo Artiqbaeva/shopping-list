@@ -18,7 +18,7 @@ const Profile = () => {
   const handleDelete = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.reload(); 
+    window.location.reload();
   };
 
   return (
@@ -29,9 +29,11 @@ const Profile = () => {
           {user.name ? user.name.charAt(0).toUpperCase() : "?"}
         </div>
         <div className="ml-6">
-          <h2 className="text-xl font-semibold">{user.name || "Name"}</h2>
-          <span className="bg-green-600 text-white px-2 py-1 rounded text-sm">Active</span>
-          <p>{user.username || "@username"}</p>
+          <h2 className="text-xl mt-4 mb-3 font-semibold"> {user.name
+              ? user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()
+              : "Name"}</h2>
+          <span className="bg-green-600 text-white px-2 mb-4 py-1 rounded text-sm">Active</span>
+          <p>{user.username || "username"}</p>
         </div>
         <div className="ml-auto space-x-2">
           <button onClick={handleCopy} className="bg-blue-500 text-white px-4 py-2 rounded">

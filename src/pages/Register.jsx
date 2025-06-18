@@ -25,6 +25,14 @@ function Register() {
         formData
       );
       localStorage.setItem("token", res.data.token);
+
+      // 👇 Foydalanuvchini localStorage ga saqlaymiz
+      const userInfo = {
+        name: formData.name,
+        username: formData.username,
+      };
+      localStorage.setItem("user", JSON.stringify(userInfo));
+
       navigate("/main");
     } catch (err) {
       alert("Registration failed!");
