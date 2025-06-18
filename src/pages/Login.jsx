@@ -25,14 +25,7 @@ function Login() {
       );
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
-        
-        
-        const userInfo = {
-          name: res.data.name || "User", // agar backend yubormasa
-          username: formData.username,
-        };
-        localStorage.setItem("user", JSON.stringify(userInfo));
-
+        localStorage.setItem("user", JSON.stringify(res.data.user)); // qo‘shildi
         navigate("/main");
       }
     } catch (err) {
@@ -40,6 +33,7 @@ function Login() {
       console.error(err);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">

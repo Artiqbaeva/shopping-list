@@ -25,6 +25,8 @@ function Register() {
         formData
       );
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); 
+
 
       // 👇 Foydalanuvchini localStorage ga saqlaymiz
       const userInfo = {
